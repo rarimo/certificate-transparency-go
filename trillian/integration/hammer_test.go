@@ -25,15 +25,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/certificate-transparency-go/client"
-	"github.com/google/certificate-transparency-go/jsonclient"
-	"github.com/google/certificate-transparency-go/tls"
-	"github.com/google/certificate-transparency-go/trillian/ctfe/configpb"
-	"github.com/google/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/client"
+	"github.com/rarimo/certificate-transparency-go/jsonclient"
+	"github.com/rarimo/certificate-transparency-go/tls"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe/configpb"
+	"github.com/rarimo/certificate-transparency-go/x509"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"k8s.io/klog/v2"
 
-	ct "github.com/google/certificate-transparency-go"
+	ct "github.com/rarimo/certificate-transparency-go"
 )
 
 func TestHammer_NotAfter(t *testing.T) {

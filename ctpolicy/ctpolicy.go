@@ -19,8 +19,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/google/certificate-transparency-go/loglist3"
-	"github.com/google/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/loglist3"
+	"github.com/rarimo/certificate-transparency-go/x509"
 )
 
 const (

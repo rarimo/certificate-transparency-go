@@ -22,9 +22,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/google/certificate-transparency-go/internal/witness/api"
-	"github.com/google/certificate-transparency-go/internal/witness/cmd/witness/internal/witness"
 	"github.com/gorilla/mux"
+	"github.com/rarimo/certificate-transparency-go/internal/witness/api"
+	"github.com/rarimo/certificate-transparency-go/internal/witness/cmd/witness/internal/witness"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"k8s.io/klog/v2"

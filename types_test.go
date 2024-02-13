@@ -21,7 +21,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/certificate-transparency-go/tls"
+	"github.com/rarimo/certificate-transparency-go/tls"
 )
 
 const (

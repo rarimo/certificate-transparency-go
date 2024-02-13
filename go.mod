@@ -1,4 +1,4 @@
-module github.com/google/certificate-transparency-go
+module github.com/rarimo/certificate-transparency-go
 
 go 1.20
 
@@ -128,5 +128,3 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
-
-replace github.com/google/certificate-transparency-go => github.com/rarimo/certificate-transparency-go v0.0.0-20240213151525-289b4cb58e25

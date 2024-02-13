@@ -24,12 +24,12 @@ import (
 	"testing"
 	"time"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/client"
-	"github.com/google/certificate-transparency-go/loglist3"
-	"github.com/google/certificate-transparency-go/testdata"
-	"github.com/google/certificate-transparency-go/tls"
 	"github.com/google/trillian/monitoring"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/client"
+	"github.com/rarimo/certificate-transparency-go/loglist3"
+	"github.com/rarimo/certificate-transparency-go/testdata"
+	"github.com/rarimo/certificate-transparency-go/tls"
 )
 
 // stubLogListRefresher produces error on each Refresh call.

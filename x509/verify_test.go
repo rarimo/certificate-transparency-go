@@ -18,7 +18,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/certificate-transparency-go/x509/pkix"
+	"github.com/rarimo/certificate-transparency-go/x509/pkix"
 )
 
 type verifyTest struct {

@@ -20,9 +20,9 @@ import (
 	"errors"
 	"fmt"
 
-	ct "github.com/google/certificate-transparency-go"
 	"github.com/google/trillian"
 	"github.com/google/trillian/types"
+	ct "github.com/rarimo/certificate-transparency-go"
 	"google.golang.org/protobuf/encoding/prototext"
 	"k8s.io/klog/v2"
 )

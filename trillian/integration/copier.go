@@ -22,14 +22,14 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/google/certificate-transparency-go/client"
-	"github.com/google/certificate-transparency-go/scanner"
-	"github.com/google/certificate-transparency-go/trillian/ctfe/configpb"
-	"github.com/google/certificate-transparency-go/x509"
-	"github.com/google/certificate-transparency-go/x509util"
+	"github.com/rarimo/certificate-transparency-go/client"
+	"github.com/rarimo/certificate-transparency-go/scanner"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe/configpb"
+	"github.com/rarimo/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/x509util"
 	"k8s.io/klog/v2"
 
-	ct "github.com/google/certificate-transparency-go"
+	ct "github.com/rarimo/certificate-transparency-go"
 )
 
 // CopyChainGenerator creates certificate chains by copying suitable examples

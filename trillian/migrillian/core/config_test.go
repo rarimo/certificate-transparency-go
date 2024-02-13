@@ -19,9 +19,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/certificate-transparency-go/trillian/ctfe/testonly"
-	"github.com/google/certificate-transparency-go/trillian/migrillian/configpb"
 	"github.com/google/trillian/crypto/keyspb"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe/testonly"
+	"github.com/rarimo/certificate-transparency-go/trillian/migrillian/configpb"
 )
 
 const ctURI = "https://ct.googleapis.com/testtube"

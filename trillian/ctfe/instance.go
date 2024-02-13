@@ -27,14 +27,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/certificate-transparency-go/asn1"
-	"github.com/google/certificate-transparency-go/schedule"
-	"github.com/google/certificate-transparency-go/trillian/util"
-	"github.com/google/certificate-transparency-go/x509"
-	"github.com/google/certificate-transparency-go/x509util"
 	"github.com/google/trillian"
 	"github.com/google/trillian/crypto/keys"
 	"github.com/google/trillian/monitoring"
+	"github.com/rarimo/certificate-transparency-go/asn1"
+	"github.com/rarimo/certificate-transparency-go/schedule"
+	"github.com/rarimo/certificate-transparency-go/trillian/util"
+	"github.com/rarimo/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/x509util"
 	"k8s.io/klog/v2"
 )
 

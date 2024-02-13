@@ -28,7 +28,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/certificate-transparency-go/testdata"
+	"github.com/rarimo/certificate-transparency-go/testdata"
 )
 
 func publicKeyPEMToDER(key string) []byte {

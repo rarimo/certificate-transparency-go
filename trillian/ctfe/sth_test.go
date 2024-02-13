@@ -24,11 +24,11 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/tls"
-	"github.com/google/certificate-transparency-go/trillian/mockclient"
 	"github.com/google/trillian"
 	"github.com/google/trillian/types"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/tls"
+	"github.com/rarimo/certificate-transparency-go/trillian/mockclient"
 )
 
 type testCase struct {

@@ -32,8 +32,8 @@ import (
 	"strings"
 	"time"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/x509"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/x509"
 	"golang.org/x/net/context/ctxhttp"
 	"k8s.io/klog/v2"
 )

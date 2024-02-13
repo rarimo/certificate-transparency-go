@@ -29,10 +29,10 @@ import (
 	"strings"
 	"testing"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/internal/witness/api"
-	"github.com/google/certificate-transparency-go/internal/witness/cmd/witness/internal/witness"
 	"github.com/gorilla/mux"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/internal/witness/api"
+	"github.com/rarimo/certificate-transparency-go/internal/witness/cmd/witness/internal/witness"
 
 	_ "github.com/mattn/go-sqlite3" // Load drivers for sqlite3
 )

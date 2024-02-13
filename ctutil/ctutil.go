@@ -23,9 +23,9 @@ import (
 	"errors"
 	"fmt"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/tls"
-	"github.com/google/certificate-transparency-go/x509"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/tls"
+	"github.com/rarimo/certificate-transparency-go/x509"
 )
 
 var emptyHash = [sha256.Size]byte{}

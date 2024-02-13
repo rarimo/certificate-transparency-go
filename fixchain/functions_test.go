@@ -23,9 +23,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/certificate-transparency-go/x509"
-	"github.com/google/certificate-transparency-go/x509/pkix"
-	"github.com/google/certificate-transparency-go/x509util"
+	"github.com/rarimo/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/x509/pkix"
+	"github.com/rarimo/certificate-transparency-go/x509util"
 )
 
 type nilLimiter struct{}

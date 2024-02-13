@@ -24,9 +24,9 @@ import (
 	"strings"
 	"time"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/trillian/ctfe"
 	"github.com/google/trillian/monitoring"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe"
 )
 
 // ProxyServer wraps Proxy and handles HTTP-requests for it.

@@ -23,9 +23,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/google/certificate-transparency-go/submission"
 	"github.com/google/trillian/monitoring/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rarimo/certificate-transparency-go/submission"
 	"k8s.io/klog/v2"
 )
 

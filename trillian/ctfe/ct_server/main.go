@@ -31,8 +31,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/google/certificate-transparency-go/trillian/ctfe"
-	"github.com/google/certificate-transparency-go/trillian/ctfe/configpb"
 	"github.com/google/trillian"
 	"github.com/google/trillian/crypto/keys"
 	"github.com/google/trillian/crypto/keys/der"
@@ -42,6 +40,8 @@ import (
 	"github.com/google/trillian/monitoring/opencensus"
 	"github.com/google/trillian/monitoring/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe/configpb"
 	"github.com/rs/cors"
 	"github.com/tomasen/realip"
 	clientv3 "go.etcd.io/etcd/client/v3"

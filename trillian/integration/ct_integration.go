@@ -36,15 +36,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/certificate-transparency-go/client"
-	"github.com/google/certificate-transparency-go/jsonclient"
-	"github.com/google/certificate-transparency-go/trillian/ctfe"
-	"github.com/google/certificate-transparency-go/trillian/ctfe/configpb"
-	"github.com/google/certificate-transparency-go/x509"
-	"github.com/google/certificate-transparency-go/x509/pkix"
 	"github.com/google/trillian"
 	"github.com/google/trillian/crypto/keyspb"
 	"github.com/kylelemons/godebug/pretty"
+	"github.com/rarimo/certificate-transparency-go/client"
+	"github.com/rarimo/certificate-transparency-go/jsonclient"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe"
+	"github.com/rarimo/certificate-transparency-go/trillian/ctfe/configpb"
+	"github.com/rarimo/certificate-transparency-go/x509"
+	"github.com/rarimo/certificate-transparency-go/x509/pkix"
 	"github.com/transparency-dev/merkle"
 	"github.com/transparency-dev/merkle/proof"
 	"github.com/transparency-dev/merkle/rfc6962"
@@ -53,7 +53,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
-	ct "github.com/google/certificate-transparency-go"
+	ct "github.com/rarimo/certificate-transparency-go"
 )
 
 const (

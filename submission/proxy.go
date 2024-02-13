@@ -21,14 +21,14 @@ import (
 	"sync"
 	"time"
 
-	ct "github.com/google/certificate-transparency-go"
-	"github.com/google/certificate-transparency-go/asn1"
-	"github.com/google/certificate-transparency-go/ctpolicy"
-	"github.com/google/certificate-transparency-go/loglist3"
-	"github.com/google/certificate-transparency-go/schedule"
-	"github.com/google/certificate-transparency-go/tls"
-	"github.com/google/certificate-transparency-go/x509util"
 	"github.com/google/trillian/monitoring"
+	ct "github.com/rarimo/certificate-transparency-go"
+	"github.com/rarimo/certificate-transparency-go/asn1"
+	"github.com/rarimo/certificate-transparency-go/ctpolicy"
+	"github.com/rarimo/certificate-transparency-go/loglist3"
+	"github.com/rarimo/certificate-transparency-go/schedule"
+	"github.com/rarimo/certificate-transparency-go/tls"
+	"github.com/rarimo/certificate-transparency-go/x509util"
 	"k8s.io/klog/v2"
 )
 

@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/google/certificate-transparency-go/schedule"
 	"github.com/google/trillian/monitoring"
+	"github.com/rarimo/certificate-transparency-go/schedule"
 )
 
 var (

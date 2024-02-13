@@ -24,9 +24,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/certificate-transparency-go/loglist3"
-	"github.com/google/certificate-transparency-go/schedule"
 	"github.com/google/go-cmp/cmp"
+	"github.com/rarimo/certificate-transparency-go/loglist3"
+	"github.com/rarimo/certificate-transparency-go/schedule"
 )
 
 // createTempFile creates a file in the system's temp directory and writes data to it.

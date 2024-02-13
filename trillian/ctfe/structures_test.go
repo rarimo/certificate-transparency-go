@@ -21,7 +21,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/certificate-transparency-go/trillian/testdata"
+	"github.com/rarimo/certificate-transparency-go/trillian/testdata"
 )
 
 var (
