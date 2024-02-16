@@ -626,15 +626,30 @@ func getPublicKeyAlgorithmFromOID(oid asn1.ObjectIdentifier) PublicKeyAlgorithm 
 // NB: secp256r1 is equivalent to prime256v1,
 // secp192r1 is equivalent to ansix9p192r and prime192v1
 var (
-	OIDNamedCurveP224   = asn1.ObjectIdentifier{1, 3, 132, 0, 33}
-	OIDNamedCurveP256   = asn1.ObjectIdentifier{1, 2, 840, 10045, 3, 1, 7}
-	OIDNamedCurveP384   = asn1.ObjectIdentifier{1, 3, 132, 0, 34}
-	OIDNamedCurveP521   = asn1.ObjectIdentifier{1, 3, 132, 0, 35}
-	OIDNamedCurveP192   = asn1.ObjectIdentifier{1, 2, 840, 10045, 3, 1, 1}
-	OIDNamedCurveP192_2 = asn1.ObjectIdentifier{1, 2, 840, 10045, 1, 1}
+	OIDNamedCurveP224    = asn1.ObjectIdentifier{1, 3, 132, 0, 33}
+	OIDNamedCurveP256    = asn1.ObjectIdentifier{1, 2, 840, 10045, 3, 1, 7}
+	OIDNamedCurveP384    = asn1.ObjectIdentifier{1, 3, 132, 0, 34}
+	OIDNamedCurveP521    = asn1.ObjectIdentifier{1, 3, 132, 0, 35}
+	OIDNamedCurveP192    = asn1.ObjectIdentifier{1, 2, 840, 10045, 3, 1, 1}
+	OIDNamedCurveUnknown = asn1.ObjectIdentifier{1, 2, 840, 10045, 1, 1}
 )
 
-func namedCurveFromOID(oid asn1.ObjectIdentifier, nfe *NonFatalErrors) elliptic.Curve {
+func namedCurveFromOID(oid asn1.ObjectIdentifier, keyLength int, nfe *NonFatalErrors) elliptic.Curve {
+	if oid.Equal(OIDNamedCurveUnknown) {
+		switch keyLength {
+		case 392:
+			return secp192r1()
+		case 456:
+			return elliptic.P224()
+		case 520:
+			return elliptic.P256()
+		case 776:
+			return elliptic.P384()
+		case 1050:
+			return elliptic.P521()
+		}
+	}
+
 	switch {
 	case oid.Equal(OIDNamedCurveP224):
 		return elliptic.P224()
@@ -646,9 +661,8 @@ func namedCurveFromOID(oid asn1.ObjectIdentifier, nfe *NonFatalErrors) elliptic.
 		return elliptic.P521()
 	case oid.Equal(OIDNamedCurveP192):
 		return secp192r1()
-	case oid.Equal(OIDNamedCurveP192_2):
-		return secp192r1()
 	}
+
 	return nil
 }
 
@@ -1450,10 +1464,12 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 		if len(rest) != 0 {
 			return nil, errors.New("x509: trailing data after ECDSA parameters")
 		}
-		namedCurve := namedCurveFromOID(*namedCurveOID, nfe)
+
+		namedCurve := namedCurveFromOID(*namedCurveOID, len(asn1Data)*8, nfe)
 		if namedCurve == nil {
 			return nil, fmt.Errorf("x509: unsupported elliptic curve %v", namedCurveOID)
 		}
+
 		x, y := elliptic.Unmarshal(namedCurve, asn1Data)
 		if x == nil {
 			return nil, errors.New("x509: failed to unmarshal elliptic curve point")
