@@ -57,6 +57,7 @@ import (
 	_ "crypto/sha1"
 	_ "crypto/sha256"
 	_ "crypto/sha512"
+	"encoding/hex"
 	"encoding/pem"
 	"errors"
 	"fmt"
@@ -69,6 +70,7 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"github.com/keybase/go-crypto/brainpool"
 	"golang.org/x/crypto/cryptobyte"
 	cryptobyte_asn1 "golang.org/x/crypto/cryptobyte/asn1"
 	"golang.org/x/crypto/ed25519"
@@ -634,22 +636,7 @@ var (
 	OIDNamedCurveUnknown = asn1.ObjectIdentifier{1, 2, 840, 10045, 1, 1}
 )
 
-func namedCurveFromOID(oid asn1.ObjectIdentifier, keyLength int, nfe *NonFatalErrors) elliptic.Curve {
-	if oid.Equal(OIDNamedCurveUnknown) {
-		switch keyLength {
-		case 392:
-			return secp192r1()
-		case 456:
-			return elliptic.P224()
-		case 520:
-			return elliptic.P256()
-		case 776:
-			return elliptic.P384()
-		case 1050:
-			return elliptic.P521()
-		}
-	}
-
+func namedCurveFromOID(oid asn1.ObjectIdentifier, nfe *NonFatalErrors) elliptic.Curve {
 	switch {
 	case oid.Equal(OIDNamedCurveP224):
 		return elliptic.P224()
@@ -662,7 +649,79 @@ func namedCurveFromOID(oid asn1.ObjectIdentifier, keyLength int, nfe *NonFatalEr
 	case oid.Equal(OIDNamedCurveP192):
 		return secp192r1()
 	}
+	return nil
+}
 
+type CurveParams struct {
+	Algorithm  *big.Int
+	Parameters struct {
+		OID   asn1.ObjectIdentifier
+		Prime *big.Int // P
+	}
+	AB struct {
+		A []byte
+		B []byte
+	}
+	Generator []byte   // Gx, Gy
+	Order     *big.Int // N
+	Cofactor  *big.Int
+}
+
+var (
+	brainpoolP256t1Gen = "04" +
+		"A3E8EB3CC1CFE7B7732213B23A656149AFA142C47AAFBC2B79A191562E1305F4" + // Gx
+		"2D996C823439C56D7F7B22E14644417E69BCB6DE39D027001DABE8F35B25C9BE" // Gy
+	brainpoolP256r1Gen = "04" +
+		"8BD2AEB9CB7E57CB2C4B482FFC81B7AFB9DE27E1E3BD23C23A4453BD9ACE3262" + // Gx
+		"547EF835C3DAC4FD97F8461A14611DC9C27745132DED8E545C1D54C72F046997" // Gy
+	brainpoolP384t1Gen = "04" +
+		"18DE98B02DB9A306F2AFCD7235F72A819B80AB12EBD653172476FECD462AABFFC4FF191B946A5F54D8D0AA2F418808CC" + // Gx
+		"25AB056962D30651A114AFD2755AD336747F93475B7A1FCA3B88F2B6A208CCFE469408584DC2B2912675BF5B9E582928" // Gy
+	brainpoolP384r1Gen = "04" +
+		"1D1C64F068CF45FFA2A63A81B7C13F6B8847A3E77EF14FE3DB7FCAFE0CBD10E8E826E03436D646AAEF87B2E247D4AF1E" + // Gx
+		"8ABE1D7520F9C2A45CB1EB8E95CFD55262B70B29FEEC5864E19C054FF99129280E4646217791811142820341263C5315" // Gy
+	brainpoolP512t1Gen = "04" +
+		"640ECE5C12788717B9C1BA06CBC2A6FEBA85842458C56DDE9DB1758D39C0313D82BA51735CDB3EA499AA77A7D6943A64F7A3F25FE26F06B51BAA2696FA9035DA" + // Gx
+		"5B534BD595F5AF0FA2C892376C84ACE1BB4E3019B71634C01131159CAE03CEE9D9932184BEEF216BD71DF2DADF86A627306ECFF96DBB8BACE198B61E00F8B332" // Gy
+	brainpoolP512r1Gen = "04" +
+		"81AEE4BDD82ED9645A21322E9C4C6A9385ED9F70B5D916C1B43B62EEF4D0098EFF3B1F78E2D0D48D50D1687B93B97D5F7C6D5047406A5E688B352209BCB9F822" + // Gx
+		"7DDE385D566332ECC0EABFA9CF7822FDF209F70024A57B1AA000C55B881F8111B2DCDE494A5F485E5BCA4BD88A2763AED1CA2B2FA8F0540678CD1E0F3AD80892" // Gy
+)
+
+func namedCurveFromParams(keyLength int, params CurveParams) elliptic.Curve {
+	switch keyLength {
+	case 392:
+		return secp192r1()
+	case 456:
+		return elliptic.P224()
+	case 520:
+		switch strings.ToUpper(hex.EncodeToString(params.Generator)) {
+		case brainpoolP256t1Gen:
+			return brainpool.P256t1()
+		case brainpoolP256r1Gen:
+			return brainpool.P256r1()
+		default:
+			return elliptic.P256()
+		}
+	case 776:
+		switch strings.ToUpper(hex.EncodeToString(params.Generator)) {
+		case brainpoolP384t1Gen:
+			return brainpool.P384t1()
+		case brainpoolP384r1Gen:
+			return brainpool.P384r1()
+		default:
+			return elliptic.P384()
+		}
+	case 1032:
+		switch strings.ToUpper(hex.EncodeToString(params.Generator)) {
+		case brainpoolP512t1Gen:
+			return brainpool.P512t1()
+		case brainpoolP512r1Gen:
+			return brainpool.P512r1()
+		}
+	case 1050, 1064:
+		return elliptic.P521()
+	}
 	return nil
 }
 
@@ -1465,14 +1524,22 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 			return nil, errors.New("x509: trailing data after ECDSA parameters")
 		}
 
-		namedCurve := namedCurveFromOID(*namedCurveOID, len(asn1Data)*8, nfe)
+		namedCurve := namedCurveFromOID(*namedCurveOID, nfe)
 		if namedCurve == nil {
-			return nil, fmt.Errorf("x509: unsupported elliptic curve %v", namedCurveOID)
+			curveParams := CurveParams{}
+			if _, err = asn1.Unmarshal(keyData.Algorithm.Parameters.FullBytes, &curveParams); err != nil {
+				return nil, errors.New("x509: failed to parse ECDSA parameters as named curve")
+			}
+
+			namedCurve = namedCurveFromParams(len(asn1Data)*8, curveParams)
+			if namedCurve == nil {
+				return nil, fmt.Errorf("x509: unsupported elliptic curve %v (%d)", namedCurveOID, (len(asn1Data)*8-8)/2)
+			}
 		}
 
 		x, y := elliptic.Unmarshal(namedCurve, asn1Data)
 		if x == nil {
-			return nil, errors.New("x509: failed to unmarshal elliptic curve point")
+			return nil, fmt.Errorf("x509: failed to unmarshal elliptic curve point: %v (%d)", namedCurveOID, (len(asn1Data)*8-8)/2)
 		}
 		pub := &ecdsa.PublicKey{
 			Curve: namedCurve,
@@ -2020,7 +2087,8 @@ func parseCertificate(in *certificate) (*Certificate, error) {
 				// RFC 5280, 4.2.1.2
 				var keyid []byte
 				if rest, err := asn1.Unmarshal(e.Value, &keyid); err != nil {
-					return nil, err
+					// It is possible to encounter certificates with non-nested subject key IDs in the wild.
+					keyid = e.Value
 				} else if len(rest) != 0 {
 					return nil, errors.New("x509: trailing data after X.509 key-id")
 				}
