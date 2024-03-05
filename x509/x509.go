@@ -1507,7 +1507,7 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 		namedCurveOID := new(asn1.ObjectIdentifier)
 		rest, err := asn1.Unmarshal(paramsData, namedCurveOID)
 		if err != nil {
-			algoParams := new(SECP192r1Params)
+			algoParams := new(ecdsaParams)
 			algoParams.Integer1 = new(big.Int)
 			algoParams.Integer2 = new(big.Int)
 			algoParams.Integer3 = new(big.Int)
@@ -1554,17 +1554,13 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 	}
 }
 
-type SECP192r1Params struct {
+type ecdsaParams struct {
 	Integer1      *big.Int
 	PrimeFieldSeq struct {
 		PrimeField asn1.ObjectIdentifier
 		Integer    *big.Int
 	}
-	ParamsSeq struct {
-		OctetStr1 asn1.RawValue
-		OctetStr2 asn1.RawValue
-		BitStr    asn1.RawValue
-	}
+	ParamsSeq asn1.RawValue
 	OctetStr1 asn1.RawValue
 	Integer2  *big.Int
 	Integer3  *big.Int
