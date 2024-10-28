@@ -652,6 +652,7 @@ func namedCurveFromOID(oid asn1.ObjectIdentifier, nfe *NonFatalErrors) elliptic.
 	return nil
 }
 
+// CurveParams contains the parameters for an elliptic curve.
 type CurveParams struct {
 	Algorithm  *big.Int
 	Parameters struct {
@@ -662,9 +663,8 @@ type CurveParams struct {
 		A []byte
 		B []byte
 	}
-	Generator []byte   // Gx, Gy
-	Order     *big.Int // N
-	Cofactor  *big.Int
+	Generator []byte
+	Order     *big.Int
 }
 
 var (
@@ -1510,12 +1510,11 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 			algoParams := new(ecdsaParams)
 			algoParams.Integer1 = new(big.Int)
 			algoParams.Integer2 = new(big.Int)
-			algoParams.Integer3 = new(big.Int)
 			algoParams.PrimeFieldSeq.Integer = new(big.Int)
 
 			rest, err = asn1.Unmarshal(paramsData, algoParams)
 			if err != nil {
-				return nil, errors.New("x509: failed to parse ECDSA parameters as named curve")
+				return nil, fmt.Errorf("x509: failed to parse ECDSA parameters as named curve: %v", err)
 			}
 
 			namedCurveOID = &algoParams.PrimeFieldSeq.PrimeField
@@ -1528,7 +1527,7 @@ func parsePublicKey(algo PublicKeyAlgorithm, keyData *publicKeyInfo, nfe *NonFat
 		if namedCurve == nil {
 			curveParams := CurveParams{}
 			if _, err = asn1.Unmarshal(keyData.Algorithm.Parameters.FullBytes, &curveParams); err != nil {
-				return nil, errors.New("x509: failed to parse ECDSA parameters as named curve")
+				return nil, fmt.Errorf("x509: failed to parse ECDSA parameters as named curve: %v", err)
 			}
 
 			namedCurve = namedCurveFromParams(len(asn1Data)*8, curveParams)
@@ -1563,7 +1562,6 @@ type ecdsaParams struct {
 	ParamsSeq asn1.RawValue
 	OctetStr1 asn1.RawValue
 	Integer2  *big.Int
-	Integer3  *big.Int
 }
 
 // NonFatalErrors is an error type which can hold a number of other errors.
